@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 9 Quiz - Monopolistic Competition and Oligopoly</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --error: #ef4444;
+            --background: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--background);
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .question-block {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 15px 20px;
+            border-radius: 12px;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option-btn.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct {
+            background: var(--success) !important;
+            border-color: var(--success) !important;
+            color: white;
+        }
+
+        .option-btn.wrong {
+            background: var(--error) !important;
+            border-color: var(--error) !important;
+            color: white;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .feedback.wrong {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+        }
+
+        .media-container {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .media-container img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: var(--text-main);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        #submit-btn {
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .quiz-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Hub</a>
+        <header>
+            <h1>Chapter 9 Quiz</h1>
+            <p style="color: var(--text-muted)">Monopolistic Competition and Oligopoly</p>
+        </header>
+
+        <div class="quiz-card" id="quiz-container">
+            <!-- Questions will be injected here -->
+        </div>
+
+        <button id="submit-btn" class="btn btn-primary">Submit Quiz</button>
+
+        <div class="controls" id="result-area" style="display: none;">
+            <div class="score-display" id="score-text">Score: 0/0</div>
+            <button onclick="window.location.reload()" class="btn btn-primary">Retry Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                "id": 1,
+                "type": "mc",
+                "question": "When a second firm enters a monopolist's market:",
+                "options": [
+                    "market price will drop.",
+                    "sales for the first firm will rise.",
+                    "the first firm's profits will increase.",
+                    "All of the above will occur."
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 2,
+                "type": "mc",
+                "question": "When a second firm enters a monopolist's market:",
+                "options": [
+                    "market price will rise.",
+                    "the quantity produced by the first firm will decrease.",
+                    "the first firm's profits increase.",
+                    "All of the above will occur."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 3,
+                "type": "mc",
+                "question": "When a second firm enters a monopolist's market, the initial demand curve facing the monopolist will:",
+                "options": [
+                    "shift to the left.",
+                    "shift to the right.",
+                    "remain the same.",
+                    "none of the above"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 4,
+                "type": "mc",
+                "question": "Empirical studies indicate that entry:",
+                "options": [
+                    "increases price and profits.",
+                    "decreases price, but increases profits.",
+                    "decreases price and profits.",
+                    "increases price, but decreases profits."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 5,
+                "type": "mc",
+                "question": "Studies of real world markets suggest that prices and the number of firms of comparable size in a market are:",
+                "options": [
+                    "positively related.",
+                    "negatively or inversely related.",
+                    "not related.",
+                    "sometimes negatively or inversely related, but usually positively related."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 6,
+                "type": "mc",
+                "question": "Which of the following is NOT a characteristic of a monopolistically competitive market?",
+                "options": [
+                    "Firms hold patents on their products.",
+                    "The products that firms sell are slightly different.",
+                    "Firms have some control over price.",
+                    "There are no artificial barriers to entry."
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 7,
+                "type": "mc",
+                "question": "Which of the following is NOT a characteristic of a monopolistically competitive market?",
+                "options": [
+                    "There are many firms.",
+                    "Firms sell products that are similar but not identical.",
+                    "Firms must take the market price as given.",
+                    "There are no artificial barriers to entry."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 8,
+                "type": "mc",
+                "question": "Which of the following is NOT a characteristic of a monopolistically competitive market?",
+                "options": [
+                    "There are many firms.",
+                    "Firms sell differentiated products.",
+                    "Firms have control over price.",
+                    "There are substantial barriers to entry."
+                ],
+                "correct": 3,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 9,
+                "type": "mc",
+                "question": "A market in which there are many firms each selling differentiated products is most likely a ________ market.",
+                "options": [
+                    "perfectly competitive",
+                    "monopoly",
+                    "monopolistically competitive",
+                    "natural monopoly"
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 10,
+                "type": "mc",
+                "question": "Which of the following is the reason why pharmaceutical firms are NOT monopolistically competitive?",
+                "options": [
+                    "Pharmaceutical firms sell differentiated products.",
+                    "There are many buyers in the market.",
+                    "There are many sellers in the market.",
+                    "There are barriers to entry in the market, like patents."
+                ],
+                "correct": 3,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 11,
+                "type": "mc",
+                "question": "Which of the following is an example of a monopolistically competitive firm?",
+                "options": [
+                    "Farmer Smith's corn farm",
+                    "Tino's Italian eatery, a local restaurant",
+                    "TCI Cablevision, a supplier of cable television services",
+                    "Northwest Electricity, a supplier of electricity in the Northwest U.S."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 12,
+                "type": "mc",
+                "question": "Which of the following is NOT an example of a monopolistically competitive firm?",
+                "options": [
+                    "Farmer Jones's wheat farm",
+                    "the Post Cereal Company",
+                    "Procter and Gamble, a large consumer products corporation",
+                    "T.J.'s Clothes, a local retail clothing store"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 13,
+                "type": "mc",
+                "question": "In Eugene, Oregon, there are several Italian restaurants, each offering slightly different items prepared in slightly different ways. It is likely that an Italian restaurant in Eugene, Oregon, operates in a(n):",
+                "options": [
+                    "perfectly competitive market.",
+                    "monopolistically competitive market.",
+                    "monopoly market.",
+                    "oligopoly market."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 14,
+                "type": "mc",
+                "question": "In Washington, D.C., there are many coffee shops, each offering nearly identical coffee but each shop is located in a different place around the city. It is likely a coffee shop in Washington, D.C., operates in a(n):",
+                "options": [
+                    "perfectly competitive market.",
+                    "monopolistically competitive market.",
+                    "monopoly market.",
+                    "oligopoly market."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 15,
+                "type": "mc",
+                "question": "In Sioux Falls, South Dakota, there are many pizza restaurants, each offering similar types of pizza but each restaurant is located in a different place around the city. It is likely a pizza restaurant in Sioux Falls, South Dakota, operates in a(n):",
+                "options": [
+                    "perfectly competitive market.",
+                    "monopolistically competitive market.",
+                    "monopoly market.",
+                    "oligopoly market."
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 16,
+                "type": "mc",
+                "question": "For a monopolistically competitive firm, the firm's demand curve is:",
+                "options": [
+                    "downward sloping.",
+                    "horizontal.",
+                    "upward sloping.",
+                    "none of the above"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 17,
+                "type": "mc",
+                "question": "Suppose in the city of Smugsburg, DVD rental stores operate in a monopolistically competitive market. If the price of DVD rentals in Smugsburg is currently equal to $5 per tape and the average cost of renting videos is $1 per DVD, in the long run we expect the price of renting DVDs to:",
+                "options": [
+                    "increase.",
+                    "stay the same.",
+                    "decrease, and the average cost of producing DVD rentals to increase.",
+                    "decrease, and the average cost of producing DVD rentals to decrease."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 18,
+                "type": "mc",
+                "question": "Suppose in the city of Blacksburg, music stores operate in a monopolistically competitive market. If the price of CDs in Blacksburg is currently equal to $20 per CD and the average cost of CDs is $15, in the long run we expect the price of CDs to:",
+                "options": [
+                    "increase.",
+                    "stay the same.",
+                    "decrease, and the average cost of selling CDs to increase.",
+                    "decrease, and the average cost of selling CDs to decrease."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 19,
+                "type": "mc",
+                "question": "If firms in a monopolistically competitive market are earning economic profits greater than zero in the short run, then in the long run:",
+                "options": [
+                    "firms will exit this market.",
+                    "profits will increase.",
+                    "profits will decrease.",
+                    "demand will not change."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 20,
+                "type": "mc",
+                "question": "In a monopolistically competitive market, if price is greater than average cost:",
+                "options": [
+                    "firms will enter.",
+                    "firms will exit.",
+                    "there will be no change in the number of firms.",
+                    "the market is in long-run equilibrium."
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 21,
+                "type": "mc",
+                "question": "If profits in a monopolistically competitive market are positive, we can conclude that: Figure 11.5",
+                "options": [
+                    "price is equal to average cost.",
+                    "price is greater than average cost",
+                    "the market is in long-run equilibrium.",
+                    "price is less than average cost."
+                ],
+                "correct": 1,
+                "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAdgB2AAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\r\nODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj\r\nY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAL4AwEDASIA\r\nAhEBAxEB/8QAGwABAAMAAwEAAAAAAAAAAAAAAAEFBgMEBwL/xABLEAEAAQMCAQULCgQDBwQDAQAA\r\nAQIDBAURBhIhMUFRExUiNVVhcXSRk7IHFCMyUoGhscHRFjNCYiRykhcmNENTVOFjc6LwJUTCgv/E\r\nABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDb\r\nZ2bYwMau/k3Iooojeefnn0OSxft5Fum5ZuU10zG8TTO7F8SXqMTV9S74070ZGJth3Kqd6aZjppjs\r\nlotL0q3iZtWdYr5FGRZoiqzTG1PKiI8L07At0oSCt1LULmHm6fYoopqpyrs0VTPTEbb8yxhR6942\r\n0T1mfhXkAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAFBr9/Cz9I1TH3ou3cWieXTVHPRVtvEulw7Te0rWqtIi7cv4leNT\r\nkW+XO82t+aY9Cy1fh+znU5F6xNVjLvW5omuiraK+yKo63b07S7GBvcpiar9dMRcu1zvVVtHb2A7y\r\nUJBRa9420T1mfhXkKPXvG2iesz8K8gEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAote8baJ6zPwryFHr3jbRPWZ+F\r\neQCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V5DOcV5ljBztGv5NfIt0ZEzM9O0bNDbrpuURXRMVU1\r\nRvEx1wD7EJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAABivlMt1XcDCiinlVd0qnm7Nud0+AuJtpp0nNuc3/ACK5+H9m\r\nj4hppr1PRqKoiaasiqJieuOS85y9Eu4/EOTp9qZpvUTNdj+7bniI8+3QD2OBmuDuIu++JOPkzFOb\r\nYjauJ5prjt/dpYBIhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKLXvG2iesz8Ki+UDEuYt/C1rGiYuWa4prqjzTvTP6L\r\n3XvG2iesz8LvazgUanpWRiVx/Monk+arqn2gxWu4deNONxVong01xFy9TT0RM9M+jqlstE1axrWn\r\nUZdjm35q6Ouirrhmvk/y+7YGXo+XETVYqmORV10zzTHtV9+i/wADcQRetRXXpeTPPT5uz0x+QPRo\r\nS4sbItZOPbv2K4rt3KYqpqjrhyAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFr3jbRPWZ+FdqTXvG2iesz8K8gGA1ame\r\nHOOsfPp5sbM+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBcrop3vY091o7duuPZ+Tn\r\n4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPon83oO6h4r4fo1zA8CIp\r\ny7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V2p\r\nNe8baJ6zPwryAYDVqZ4c46x8+nmxsz+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBc\r\nrop3vY091o7duuPZ+Tn4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPo\r\nn83oO6h4r4fo1zA8CIpy7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAA"
+            },
+            {
+                "id": 22,
+                "type": "mc",
+                "question": "The monopolistically competitive firm in Figure 11.5 will produce where:",
+                "options": [
+                    "MC = MR .",
+                    "MC = D.",
+                    "MR = D.",
+                    "all of the above"
+                ],
+                "correct": 0,
+                "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAdgB2AAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\r\nODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj\r\nY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAL4AwEDASIA\r\nAhEBAxEB/8QAGwABAAMAAwEAAAAAAAAAAAAAAAEFBgMEBwL/xABLEAEAAQMCAQULCgQDBwQDAQAA\r\nAQIDBAURBhIhMUFRExUiNVVhcXSRk7IHFCMyUoGhscHRFjNCYiRykhcmNENTVOFjc6LwJUTCgv/E\r\nABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDb\r\nZ2bYwMau/k3Iooojeefnn0OSxft5Fum5ZuU10zG8TTO7F8SXqMTV9S74070ZGJth3Kqd6aZjppjs\r\nlotL0q3iZtWdYr5FGRZoiqzTG1PKiI8L07At0oSCt1LULmHm6fYoopqpyrs0VTPTEbb8yxhR6942\r\n0T1mfhXkAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAFBr9/Cz9I1TH3ou3cWieXTVHPRVtvEulw7Te0rWqtIi7cv4leNT\r\nkW+XO82t+aY9Cy1fh+znU5F6xNVjLvW5omuiraK+yKo63b07S7GBvcpiar9dMRcu1zvVVtHb2A7y\r\nUJBRa9420T1mfhXkKPXvG2iesz8K8gEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAote8baJ6zPwryFHr3jbRPWZ+F\r\neQCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V5DOcV5ljBztGv5NfIt0ZEzM9O0bNDbrpuURXRMVU1\r\nRvEx1wD7EJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAABivlMt1XcDCiinlVd0qnm7Nud0+AuJtpp0nNuc3/ACK5+H9m\r\nj4hppr1PRqKoiaasiqJieuOS85y9Eu4/EOTp9qZpvUTNdj+7bniI8+3QD2OBmuDuIu++JOPkzFOb\r\nYjauJ5prjt/dpYBIhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKLXvG2iesz8Ki+UDEuYt/C1rGiYuWa4prqjzTvTP6L\r\n3XvG2iesz8LvazgUanpWRiVx/Monk+arqn2gxWu4deNONxVong01xFy9TT0RM9M+jqlstE1axrWn\r\nUZdjm35q6Ouirrhmvk/y+7YGXo+XETVYqmORV10zzTHtV9+i/wADcQRetRXXpeTPPT5uz0x+QPRo\r\nS4sbItZOPbv2K4rt3KYqpqjrhyAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFr3jbRPWZ+FdqTXvG2iesz8K8gGA1ame\r\nHOOsfPp5sbM+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBcrop3vY091o7duuPZ+Tn\r\n4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPon83oO6h4r4fo1zA8CIp\r\ny7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V2p\r\nNe8baJ6zPwryAYDVqZ4c46x8+nmxsz+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBc\r\nrop3vY091o7duuPZ+Tn4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPo\r\nn83oO6h4r4fo1zA8CIpy7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAA"
+            },
+            {
+                "id": 23,
+                "type": "mc",
+                "question": "Where the monopolistically competitive firm in Figure 11.5 produces, it will:",
+                "options": [
+                    "make a positive economic profit.",
+                    "suffer a loss.",
+                    "make a zero economic profit.",
+                    "make a negative economic profit."
+                ],
+                "correct": 2,
+                "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAdgB2AAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\r\nODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj\r\nY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAL4AwEDASIA\r\nAhEBAxEB/8QAGwABAAMAAwEAAAAAAAAAAAAAAAEFBgMEBwL/xABLEAEAAQMCAQULCgQDBwQDAQAA\r\nAQIDBAURBhIhMUFRExUiNVVhcXSRk7IHFCMyUoGhscHRFjNCYeRykhcmNENTVOFjc6LwJUTCgv/E\r\nABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDb\r\nZ2bYwMau/k3Iooojeefnn0OSxft5Fum5ZuU10zG8TTO7F8SXqMTV9S74070ZGJth3Kqd6aZjppjs\r\nlotL0q3iZtWdYr5FGRZoiqzTG1PKiI8L07At0oSCt1LULmHm6fYoopqpyrs0VTPTEbb8yxhR6942\r\n0T1mfhXkAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAFBr9/Cz9I1TH3ou3cWieXTVHPRVtvEulw7Te0rWqtIi7cv4leNT\r\nkW+XO82t+aY9Cy1fh+znU5F6xNVjLvW5omuiraK+yKo63b07S7GBvcpiar9dMRcu1zvVVtHb2A7y\r\nUJBRa9420T1mfhXkKPXvG2iesz8K8gEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAote8baJ6zPwryFHr3jbRPWZ+F\r\neQCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V5DOcV5ljBztGv5NfIt0ZEzM9O0bNDbrpuURXRMVU1\r\nRvEx1wD7EJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAABivlMt1XcDCiinlVd0qnm7Nud0+AuJtpp0nNuc3/ACK5+H9m\r\nj4hppr1PRqKoiaasiqJieuOS85y9Eu4/EOTp9qZpvUTNdj+7bniI8+3QD2OBmuDuIu++JOPkzFOb\r\nYjauJ5prjt/dpYBIhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKLXvG2iesz8Ki+UDEuYt/C1rGiYuWa4prqjzTvTP6L\r\n3XvG2iesz8LvazgUanpWRiVx/Monk+arqn2gxWu4deNONxVong01xFy9TT0RM9M+jqlstE1axrWn\r\nUZdjm35q6Ouirrhmvk/y+7YGXo+XETVYqmORV10zzTHtV9+i/wADcQRetRXXpeTPPT5uz0x+QPRo\r\nS4sbItZOPbv2K4rt3KYqpqjrhyAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFr3jbRPWZ+FdqTXvG2iesz8K8gGA1ame\r\nHOOsfPp5sbM+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBcrop3vY091o7duuPZ+Tn\r\n4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPon83oO6h4r4fo1zA8CIp\r\ny7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V2p\r\nNe8baJ6zPwryAYDVqZ4c46x8+nmxsz+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBc\r\rop3vY091o7duuPZ+Tn4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPo\r\nn83oO6h4r4fo1zA8CIpy7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAA"
+            },
+            {
+                "id": 24,
+                "type": "mc",
+                "question": "The monopolistic competitive industry in Figure 11.5 will tend to:",
+                "options": [
+                    "contract.",
+                    "remain the same size.",
+                    "expand.",
+                    "go out of business."
+                ],
+                "correct": 1,
+                "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQIAdgB2AAD/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkz\r\nODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2Nj\r\nY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAL4AwEDASIA\r\nAhEBAxEB/8QAGwABAAMAAwEAAAAAAAAAAAAAAAEFBgMEBwL/xABLEAEAAQMCAQULCgQDBwQDAQAA\r\nAQIDBAURBhIhMUFRExUiNVVhcXSRk7IHFCMyUoGhscHRFjNCYiRykhcmNENTVOFjc6LwJUTCgv/E\r\nABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwDb\r\nZ2bYwMau/k3Iooojeefnn0OSxft5Fum5ZuU10zG8TTO7F8SXqMTV9S74070ZGJth3Kqd6aZjppjs\r\nlotL0q3iZtWdYr5FGRZoiqzTG1PKiI8L07At0oSCt1LULmHm6fYoopqpyrs0VTPTEbb8yxhR6942\r\n0T1mfhXkAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAFBr9/Cz9I1TH3ou3cWieXTVHPRVtvEulw7Te0rWqtIi7cv4leNT\r\nkW+XO82t+aY9Cy1fh+znU5F6xNVjLvW5omuiraK+yKo63b07S7GBvcpiar9dMRcu1zvVVtHb2A7y\r\nUJBRa9420T1mfhXkKPXvG2iesz8K8gEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAote8baJ6zPwryFHr3jbRPWZ+F\r\neQCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V5DOcV5ljBztGv5NfIt0ZEzM9O0bNDbrpuURXRMVU1\r\nRvEx1wD7EJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAABivlMt1XcDCiinlVd0qnm7Nud0+AuJtpp0nNuc3/ACK5+H9m\r\nj4hppr1PRqKoiaasiqJieuOS85y9Eu4/EOTp9qZpvUTNdj+7bniI8+3QD2OBmuDuIu++JOPkzFOb\r\nYjauJ5prjt/dpYBIhIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKLXvG2iesz8Ki+UDEuYt/C1rGiYuWa4prqjzTvTP6L\r\n3XvG2iesz8LvazgUanpWRiVx/Monk+arqn2gxWu4deNONxVong01xFy9TT0RM9M+jqlstE1axrWn\r\nUZdjm35q6Ouirrhmvk/y+7YGXo+XETVYqmORV10zzTHtV9+i/wADcQRetRXXpeTPPT5uz0x+QPRo\r\nS4sbItZOPbv2K4rt3KYqpqjrhyAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFr3jbRPWZ+FdqTXvG2iesz8K8gGA1ame\r\nHOOsfPp5sbM+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBcrop3vY091o7duuPZ+Tn\r\n4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPon83oO6h4r4fo1zA8CIp\r\ny7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUWveNtE9Zn4V2p\r\nNe8baJ6zPwryAYDVqZ4c46x8+nmxsz+v2RvzVfjtLZarptjVtPuYmRG9Fcc09dM9UwqeOtM74aBc\r\rop3vY091o7duuPZ+Tn4O1Tvnw/j11TvdtR3Kv0x0T7AZrhzUb/AA1rFeh6pVMWKqvork9ETPRPo\r\nn83oO6h4r4fo1zA8CIpy7UTNqvt/tnzK7gniCvIpnSdQ3pzcfeKZr6a4jq9MA16URICQAAAAAAAAAAAAAAAA\r\nAAAAAAAAAAA"
+            },
+            {
+                "id": 25,
+                "type": "mc",
+                "question": "Examples of monopolistically competitive industries in which firms differentiate their products by offering them at more locations include all of the following EXCEPT:",
+                "options": [
+                    "restaurants.",
+                    "video rental stores.",
+                    "retail clothing stores.",
+                    "wheat farms."
+                ],
+                "correct": 3,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 26,
+                "type": "mc",
+                "question": "Restaurants, video rental stores, clothing stores, and music stores are examples of industries in which firms differentiate their products by offering them at more locations. This is an example of a(n) ________ market.",
+                "options": [
+                    "perfectly competitive",
+                    "monopoly",
+                    "monopolistically competitive",
+                    "oligopoly"
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 27,
+                "type": "mc",
+                "question": "Gasoline stations carrying the same fuel brand (e.g., Chevron) are able to charge different prices in San Francisco because:",
+                "options": [
+                    "location is a source for product differentiation.",
+                    "gasoline stations are perfect price discriminators.",
+                    "gasoline station operators form a cartel to act as a monopoly.",
+                    "fuel quality varies across stores."
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 28,
+                "type": "mc",
+                "question": "As compared to a perfectly competitive firm, a monopolistically competitive firm will:",
+                "options": [
+                    "have more control over price.",
+                    "have less control over price.",
+                    "face more barriers to entry.",
+                    "face many more competitors."
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 29,
+                "type": "mc",
+                "question": "As compared to a perfectly competitive firm, a monopolistically competitive firm will:",
+                "options": [
+                    "have less control over price.",
+                    "face more barriers to entry.",
+                    "face more competitors.",
+                    "sell a more differentiated product."
+                ],
+                "correct": 3,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 30,
+                "type": "mc",
+                "question": "Monopolistically competitive markets are like perfectly competitive markets because in both markets firms:",
+                "options": [
+                    "have some control over price.",
+                    "face substantial barriers to entry.",
+                    "face a large number of competitors.",
+                    "have no control over price."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 31,
+                "type": "mc",
+                "question": "Which of the following characteristics of the monopolistically competitive and the perfectly competitive market will cause the firm to earn zero profits in the long run?",
+                "options": [
+                    "no barriers to entry",
+                    "many buyers",
+                    "price taker",
+                    "homogeneous product"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 32,
+                "type": "mc",
+                "question": "Since people generally know that celebrities are paid to endorse products, celebrity endorsements signal to consumers that:",
+                "options": [
+                    "the product is likely to be popular.",
+                    "the celebrity loves the product.",
+                    "only rich people can afford the product.",
+                    "all of the above"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 33,
+                "type": "mc",
+                "question": "Since people generally know that celebrities are paid to endorse products, celebrity endorsements signal to consumers that:",
+                "options": [
+                    "the celebrity loves the product.",
+                    "the product is appealing.",
+                    "only rich people can afford the product.",
+                    "all of the above"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 34,
+                "type": "mc",
+                "question": "If a firm that makes $100 profit per pair of shoes pays LeBron James $2,000,000 to endorse their basketball shoes, then to make the endorsement pay off they must sell at least:",
+                "options": [
+                    "$2,000,000 more in shoes.",
+                    "$20,000 more in shoes.",
+                    "20,000 more pairs of shoes.",
+                    "20,000 more pairs of shoes."
+                ],
+                "correct": 2,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 35,
+                "type": "mc",
+                "question": "If a firm that makes $5 profit per box of cigars pays Rush Limbaugh $1,000,000 to endorse their cigars, then to make the endorsement pay off they must sell at least:",
+                "options": [
+                    "$2,000,000 more in cigars.",
+                    "$20,000 more in cigars.",
+                    "20,000 more boxes of cigars.",
+                    "200,000 more boxes of cigars."
+                ],
+                "correct": 3,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 1,
+                "type": "tf",
+                "question": "The entry of an additional firm into a market decreases the profit per unit of output because entry decreases the price.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 2,
+                "type": "tf",
+                "question": "The entry of an additional firm into a market shifts the demand curve for the original firm to the left.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 3,
+                "type": "tf",
+                "question": "Entry leads to higher prices and profits in an industry.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 4,
+                "type": "tf",
+                "question": "Entry leads to reduced firm profits because it leads to a lower price.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 5,
+                "type": "tf",
+                "question": "Entry of a second firm will result in a downward shift in the ATC curve.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 6,
+                "type": "tf",
+                "question": "Empirical studies show that entry into markets increases both price and quantity of goods supplied.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 7,
+                "type": "tf",
+                "question": "A market is called monopolistically competitive if each firm has the same product but consumers can choose to purchase the product from any firm.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 8,
+                "type": "tf",
+                "question": "Monopolistically competitive firms sell differentiated products.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 9,
+                "type": "tf",
+                "question": "In the long run, monopolistically competitive firms become perfectly competitive firms.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 10,
+                "type": "tf",
+                "question": "Monopolistically competitive industries have only a single firm and there is a barrier to entry.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 11,
+                "type": "tf",
+                "question": "Some firms in monopolistically competitive markets differentiate their products by their physical characteristics.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 12,
+                "type": "tf",
+                "question": "The market for laundry detergent is monopolistically competitive because products differ by physical characteristics such as scent, stain fighting ingredients, etc.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 13,
+                "type": "tf",
+                "question": "Department stores are monopolistically competitive because stores differ in the amount of customer service they provide.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 14,
+                "type": "tf",
+                "question": "An example of a monopolistically competitive industry is cable television service.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 15,
+                "type": "tf",
+                "question": "An example of a monopolistically competitive industry is grocery stores.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 16,
+                "type": "tf",
+                "question": "The price that a monopolistically competitive firm will charge depends on what its competitors charge.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 17,
+                "type": "tf",
+                "question": "In monopolistically competitive industries, firms find it easy to enter and exit the market in the long run.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 18,
+                "type": "tf",
+                "question": "In the short run, monopolistically competitive firms find their profit-maximizing quantity by setting price equal to marginal cost.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 1,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 19,
+                "type": "tf",
+                "question": "In the long run, monopolistically competitive firms earn zero economic profits.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            },
+            {
+                "id": 20,
+                "type": "tf",
+                "question": "Some monopolistically competitive firms differentiate their products simply by opening a new store at a different location.",
+                "options": [
+                    "True",
+                    "False"
+                ],
+                "correct": 0,
+                "image": null,
+                "table": null
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultArea = document.getElementById('result-area');
+        const scoreText = document.getElementById('score-text');
+
+        const userAnswers = new Array(quizData.length).fill(null);
+
+        function renderQuiz() {
+            quizData.forEach((q, index) => {
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block';
+                questionBlock.id = `q-${index}`;
+
+                let mediaHtml = '';
+                if (q.image) {
+                    mediaHtml += `<div class="media-container"><img src="${q.image}" alt="Question Image"></div>`;
+                }
+                if (q.table) {
+                    mediaHtml += `<div class="table-container"><table>${q.table}</table></div>`;
+                }
+
+                const optionsHtml = q.options.map((opt, optIndex) => `
+                    <button class="option-btn" onclick="selectOption(${index}, ${optIndex})" id="q-${index}-opt-${optIndex}">
+                        ${opt}
+                    </button>
+                `).join('');
+
+                questionBlock.innerHTML = `
+                    <div class="question-text">${index + 1}. ${q.question}</div>
+                    ${mediaHtml}
+                    <div class="options-grid">${optionsHtml}</div>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+                quizContainer.appendChild(questionBlock);
+            });
+        }
+
+        window.selectOption = function (qIndex, optIndex) {
+            userAnswers[qIndex] = optIndex;
+            const buttons = document.querySelectorAll(`#q-${qIndex} .option-btn`);
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            document.getElementById(`q-${qIndex}-opt-${optIndex}`).classList.add('selected');
+        };
+
+        submitBtn.onclick = function () {
+            let score = 0;
+            quizData.forEach((q, index) => {
+                const feedback = document.getElementById(`feedback-${index}`);
+                const buttons = document.querySelectorAll(`#q-${index} .option-btn`);
+
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    btn.style.cursor = 'default';
+                });
+
+                if (userAnswers[index] === q.correct) {
+                    score++;
+                    feedback.textContent = 'Correct!';
+                    feedback.className = 'feedback show correct';
+                    document.getElementById(`q-${index}-opt-${userAnswers[index]}`).classList.add('correct');
+                } else {
+                    feedback.textContent = `Incorrect. The correct answer was: ${q.options[q.correct]}`;
+                    feedback.className = 'feedback show wrong';
+                    if (userAnswers[index] !== null) {
+                        document.getElementById(`q-${index}-opt-${userAnswers[index]}`).classList.add('wrong');
+                    }
+                    document.getElementById(`q-${index}-opt-${q.correct}`).classList.add('correct');
+                }
+            });
+
+            submitBtn.style.display = 'none';
+            resultArea.style.display = 'flex';
+            scoreText.textContent = `Score: ${score}/${quizData.length}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        renderQuiz();
+    </script>
+</body>
+
+</html>
